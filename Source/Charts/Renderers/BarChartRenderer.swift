@@ -36,6 +36,8 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
     /// The ````internal```` specifier is to allow subclasses (HorizontalBar) to populate the same array
     internal lazy var accessibilityOrderedElements: [[NSUIAccessibilityElement]] = accessibilityCreateEmptyOrderedElements()
 
+    public var minHeightBar: CGFloat = 0
+    
     private class Buffer
     {
         var rects = [CGRect]()
@@ -423,7 +425,10 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
                 context.setFillColor(dataSet.color(atIndex: j).cgColor)
             }
             
-            context.fill(barRect)
+            context.fill(CGRect(x: barRect.origin.x,
+                                y: barRect.origin.y,
+                                width: barRect.width,
+                                height: barRect.height + minHeightBar))
             
             if drawBorder
             {
