@@ -327,10 +327,12 @@ open class BarChartRenderer: BarLineScatterCandleBubbleRenderer
         trans.rectValuesToPixel(&_buffers[index].rects)
         // set minHeightBar
         _buffers[index].rects = _buffers[index].rects.map({ (rect) -> CGRect in
+            let additinalHeight = rect.height < minHeightBar ? minHeightBar - rect.height : 0
+            
             return CGRect(x: rect.origin.x,
-                          y: rect.origin.y - minHeightBar,
+                          y: rect.origin.y - additinalHeight,
                           width: rect.width,
-                          height: rect.height + minHeightBar)
+                          height: rect.height + additinalHeight)
         })
         
         let borderWidth = dataSet.barBorderWidth
